@@ -17,11 +17,6 @@ namespace PracticumTask.Models
             Database.EnsureCreated();
         }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=practicum;Username=postgres;Password=1234"); //todo - refactor
-        }
-
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<Book>()
