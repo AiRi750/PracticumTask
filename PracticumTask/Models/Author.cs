@@ -14,5 +14,7 @@ namespace PracticumTask.Models
         public string LastName { get; set; }
         public string Patronymic { get; set; }
         public DateTime Birthdate { get; set; }
+
+        public List<Book> Books { get; set; } = new List<Book>();
     }
 }

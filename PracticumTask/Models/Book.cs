@@ -11,7 +11,11 @@ namespace PracticumTask.Models
         public int Id { get; set; }
         [Required]
         public string Title { get; set; }
-        public string Author { get; set; } //todo - make link to author?
-        public string Genre { get; set; } //todo - make link to genre?
+
+        public int AuthorId { get; set; }
+        public Author Author { get; set; }
+
+        public int GenreId { get; set; }
+        public Genre Genre { get; set; }
     }
 }
