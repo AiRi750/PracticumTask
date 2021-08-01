@@ -39,5 +39,19 @@ namespace PracticumTask.Controllers
             context.SaveChanges();
             return Ok(context.Books);
         }
+
+        // DELETE api/<AuthorsController>/5
+        [HttpDelete]
+        public async Task<IActionResult> Delete([FromBody] Author value, string title)
+        {
+            var book = context.Books
+                .FirstOrDefault(x => x.Title == title && x.AuthorId == value.Id);
+            if (book == null)
+                return NotFound();
+
+            context.Remove(book);
+            context.SaveChanges();
+            return Ok();
+        }
     }
 }
