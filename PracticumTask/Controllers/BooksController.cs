@@ -27,6 +27,16 @@ namespace PracticumTask.Controllers
             return context.Books;
         }
 
+        // GET api/<AuthorsController>/5
+        [HttpGet("{authorId}")]
+        public async Task<IActionResult> Get(int id)
+        {
+            var books = context.Books.Where(x => x.AuthorId == id);
+            if (books.FirstOrDefault() == null)
+                return NotFound();
+            return Ok(books);
+        }
+
         // POST api/<BooksController>
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] Book value)
