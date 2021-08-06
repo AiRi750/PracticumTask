@@ -41,7 +41,8 @@ namespace PracticumTask.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] Book value)
         {
-            var book = context.Books.FirstOrDefault(x => x.Title == value.Title);
+            var book = context.Books.FirstOrDefault(x => x.Title == value.Title 
+                && x.AuthorId == value.AuthorId);
             if (book != null)
                 return new ConflictResult();
 
