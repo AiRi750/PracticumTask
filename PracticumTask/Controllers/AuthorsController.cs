@@ -41,7 +41,10 @@ namespace PracticumTask.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] Author value)
         {
-            var author = context.Authors.FirstOrDefault(x => x.FirstName == value.FirstName);
+            var author = context.Authors
+                .FirstOrDefault(x => x.FirstName == value.FirstName
+                    && x.LastName == value.LastName
+                    && x.Patronymic == value.Patronymic);
             if (author != null)
                 return new ConflictResult();
 
