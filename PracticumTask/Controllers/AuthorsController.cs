@@ -44,7 +44,7 @@ namespace PracticumTask.Controllers
             var author = context.Authors
                 .FirstOrDefault(x => x.FirstName == value.FirstName
                     && x.LastName == value.LastName
-                    && x.Patronymic == value.Patronymic);
+                    && x.MiddleName == value.MiddleName);
             if (author != null)
                 return new ConflictResult();
 
@@ -60,7 +60,7 @@ namespace PracticumTask.Controllers
             var author = context.Authors
                 .FirstOrDefault(x => x.FirstName == value.FirstName
                     && x.LastName == value.LastName
-                    && x.Patronymic == value.Patronymic);
+                    && x.MiddleName == value.MiddleName);
             if (author == null)
                 return NotFound();
 

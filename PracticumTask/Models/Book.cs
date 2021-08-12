@@ -11,11 +11,10 @@ namespace PracticumTask.Models
         public int Id { get; set; }
         [Required]
         public string Title { get; set; }
-
+        [Required]
         public int AuthorId { get; set; }
         public Author Author { get; set; }
-
-        public int GenreId { get; set; }
-        public Genre Genre { get; set; }
+        public List<Genre> Genres { get; set; } = new List<Genre>();
+        public List<Person> People { get; set; } = new List<Person>();
     }
 }
