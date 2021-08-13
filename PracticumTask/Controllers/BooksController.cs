@@ -4,8 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using PracticumTask.Models;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+using PracticumTask.Services;
 
 namespace PracticumTask.Controllers
 {
@@ -13,55 +12,44 @@ namespace PracticumTask.Controllers
     [ApiController]
     public class BooksController : ControllerBase
     {
-        private readonly ApplicationContext context;
+        private readonly IBookService bookService;
 
-        public BooksController(ApplicationContext context)
-        {
-            this.context = context;
-        }
+        public BooksController(IBookService service) => bookService = service;
 
-        // GET: api/<BooksController>
         [HttpGet]
-        public IAsyncEnumerable<Book> Get()
-        {
-            return context.Books;
-        }
+        public IAsyncEnumerable<Book> Get() => bookService.GetAll();
 
-        // GET api/<AuthorsController>/5
         [HttpGet("{authorId}")]
         public async Task<IActionResult> Get(int id)
         {
-            var books = context.Books.Where(x => x.AuthorId == id);
-            if (books.FirstOrDefault() == null)
+            var books = bookService.Get(id);
+            if (books == null)
                 return NotFound();
             return Ok(books);
         }
 
-        // POST api/<BooksController>
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] Book value)
         {
-            var book = context.Books.FirstOrDefault(x => x.Title == value.Title 
-                && x.AuthorId == value.AuthorId);
+            var book = bookService.GetByAuthorAndTitle(
+                value.Author.FirstName, value.Author.LastName, value.Author.MiddleName, value.Title);
             if (book != null)
-                return new ConflictResult();
+                return Conflict();
 
-            context.Add(value);
-            context.SaveChanges();
-            return Ok(context.Books);
+            bookService.Add(value);
+            bookService.Save();
+            return Ok(bookService.GetAll());
         }
 
-        // DELETE api/<AuthorsController>/5
         [HttpDelete]
-        public async Task<IActionResult> Delete([FromBody] Author value, string title)
+        public async Task<IActionResult> Delete(int authorId, string title)
         {
-            var book = context.Books
-                .FirstOrDefault(x => x.Title == title && x.AuthorId == value.Id);
+            var book = bookService.GetByAuthorIdAndTitle(authorId, title);
             if (book == null)
                 return NotFound();
 
-            context.Remove(book);
-            context.SaveChanges();
+            bookService.Delete(book);
+            bookService.Save();
             return Ok();
         }
     }

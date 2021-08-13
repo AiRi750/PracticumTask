@@ -7,13 +7,15 @@ using System.Threading.Tasks;
 
 namespace PracticumTask.Services
 {
-    interface IBookService
+    public interface IBookService
     {
-        IAsyncEnumerable<Book> GetAll();
-        Book Get(int id);
-        IQueryable<Book> GetByAuthor(string firstName, string lastName, string middleName);
+        public IAsyncEnumerable<Book> GetAll();
+        public Book Get(int id);
+        public IQueryable<Book> GetByAuthor(string firstName, string lastName, string middleName);
+        public Book GetByAuthorAndTitle(string firstName, string lastName, string middleName, string title);
+        public Book GetByAuthorIdAndTitle(int authorId, string title);
         public void Add([FromBody] Book value);
-        public void Delete([FromBody] Author author, string name);
+        public void Delete([FromBody] Book value);
         public void Save();
     }
 }

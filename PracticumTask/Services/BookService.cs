@@ -23,12 +23,20 @@ namespace PracticumTask.Services
                 x.Author.LastName == lastName &&
                 x.Author.MiddleName == middleName);
 
+        public Book GetByAuthorAndTitle(string firstName, string lastName, string middleName, string title)
+            => context.Books.FirstOrDefault(x =>
+                x.Title == title &&
+                x.Author.FirstName == firstName &&
+                x.Author.LastName == lastName &&
+                x.Author.MiddleName == middleName);
+
+        public Book GetByAuthorIdAndTitle(int authorId, string title) 
+            => context.Books.FirstOrDefault(x => x.AuthorId == authorId && x.Title == title);
+
         public void Add([FromBody] Book value) => context.Add(value);
 
-        public void Delete([FromBody] Author author, string title) 
-            => context.Remove(
-                GetByAuthor(author.FirstName, author.LastName, author.MiddleName)
-                    .First(x => x.Title == title));
+        public void Delete([FromBody] Book value) 
+            => context.Remove(value);
 
         public void Save() => context.SaveChanges();
     }

@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace PracticumTask.Services
 {
-    interface IGenreService
+    public interface IGenreService
     {
-        IAsyncEnumerable<Genre> GetAll();
-        Genre Get(int id);
-        Genre Get(string title);
+        public IAsyncEnumerable<Genre> GetAll();
+        public Genre Get(int id);
+        public Genre Get(string name);
         public void Add([FromBody] Genre value);
         public void Delete([FromBody] Genre value);
         public void Save();

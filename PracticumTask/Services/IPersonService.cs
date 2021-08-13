@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace PracticumTask.Services
 {
-    interface IPersonService
+    public interface IPersonService
     {
-        IAsyncEnumerable<Person> GetAll();
-        Person Get(int id);
-        Person Get(string firstName, string lastName, string middleName);
+        public IAsyncEnumerable<Person> GetAll();
+        public Person Get(int id);
+        public Person Get(string firstName, string lastName, string middleName);
         public void Add([FromBody] Person value);
         public void Delete([FromBody] Person value);
         public void Save();
