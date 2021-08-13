@@ -32,6 +32,7 @@ namespace PracticumTask
             services.AddDbContext<Models.ApplicationContext>(options => options.UseNpgsql(connectionString));
 
             services.AddScoped<IAuthorService, AuthorService>();
+            services.AddScoped<IPersonService, PersonService>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
