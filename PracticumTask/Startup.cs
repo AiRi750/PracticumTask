@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using PracticumTask.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,6 +30,9 @@ namespace PracticumTask
         {
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<Models.ApplicationContext>(options => options.UseNpgsql(connectionString));
+
+            services.AddScoped<IAuthorService, AuthorService>();
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

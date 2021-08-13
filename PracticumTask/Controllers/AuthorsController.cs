@@ -4,8 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using PracticumTask.Models;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+using PracticumTask.Services;
 
 namespace PracticumTask.Controllers
 {
@@ -13,59 +12,43 @@ namespace PracticumTask.Controllers
     [ApiController]
     public class AuthorsController : ControllerBase
     {
-        private readonly ApplicationContext context;
+        private readonly IAuthorService authorService;
 
-        public AuthorsController(ApplicationContext context)
-        {
-            this.context = context;
-        }
+        public AuthorsController(IAuthorService service) => authorService = service;
 
-        // GET: api/<AuthorsController>
         [HttpGet]
-        public IAsyncEnumerable<Author> Get()
-        {
-            return context.Authors;
-        }
+        public IAsyncEnumerable<Author> GetAll() => authorService.GetAll();
 
-        // GET api/<AuthorsController>/5
         [HttpGet("{firstName}")]
         public async Task<IActionResult> Get(string firstName)
         {
-            var author = context.Authors.Where(x => x.FirstName == firstName);
-            if (author.FirstOrDefault() == null)
+            var authors = authorService.Get(firstName);
+            if (authors.FirstOrDefault() == null)
                 return NotFound();
-            return Ok(author);
+            return Ok(authors);
         }
 
-        // POST api/<AuthorsController>
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] Author value)
+        public async Task<IActionResult> Add([FromBody] Author value)
         {
-            var author = context.Authors
-                .FirstOrDefault(x => x.FirstName == value.FirstName
-                    && x.LastName == value.LastName
-                    && x.MiddleName == value.MiddleName);
+            var author = authorService.Get(value.FirstName, value.LastName, value.MiddleName);
             if (author != null)
-                return new ConflictResult();
+                return Conflict();
 
-            context.Add(value);
-            context.SaveChanges();
-            return Ok(context.Authors);
+            authorService.Add(value);
+            authorService.Save();
+            return Ok(authorService.GetAll());
         }
 
-        // DELETE api/<AuthorsController>/5
         [HttpDelete]
-        public async Task<IActionResult> Delete([FromBody] Author value)
+        public async Task<IActionResult> Delete(string firstName, string lastName, string middleName)
         {
-            var author = context.Authors
-                .FirstOrDefault(x => x.FirstName == value.FirstName
-                    && x.LastName == value.LastName
-                    && x.MiddleName == value.MiddleName);
+            var author = authorService.Get(firstName, lastName, middleName);
             if (author == null)
                 return NotFound();
 
-            context.Remove(author);
-            context.SaveChanges();
+            authorService.Delete(author);
+            authorService.Save();
             return Ok();
         }
     }
