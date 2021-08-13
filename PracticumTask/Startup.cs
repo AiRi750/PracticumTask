@@ -34,6 +34,7 @@ namespace PracticumTask
             services.AddScoped<IAuthorService, AuthorService>();
             services.AddScoped<IPersonService, PersonService>();
             services.AddScoped<IGenreService, GenreService>();
+            services.AddScoped<IBookService, BookService>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
