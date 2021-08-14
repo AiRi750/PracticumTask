@@ -14,7 +14,7 @@ namespace PracticumTask.Services
 
         public AuthorService(ApplicationContext context) => this.context = context;
 
-        public IAsyncEnumerable<Author> GetAll() => context.Authors;
+        public IQueryable<Author> GetAll() => context.Authors;
 
         public IQueryable<Author> Get(string firstName)
             => context.Authors.Where(x => x.FirstName == firstName);
