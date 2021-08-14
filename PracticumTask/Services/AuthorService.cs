@@ -22,10 +22,13 @@ namespace PracticumTask.Services
         public Author Get(int id) => context.Authors.Find(id);
 
         public Author Get(string firstName, string lastName, string middleName) 
-            => context.Authors.FirstOrDefault(x => 
+            => context.Authors.FirstOrDefault
+            (
+                x => 
                 x.FirstName == firstName && 
                 x.LastName == lastName && 
-                x.MiddleName == middleName);
+                x.MiddleName == middleName
+            );
 
         public void Add([FromBody] Author value) => context.Add(value);
 

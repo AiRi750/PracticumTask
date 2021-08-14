@@ -12,7 +12,13 @@ namespace PracticumTask.Services
         public IAsyncEnumerable<Book> GetAll();
         public Book Get(int id);
         public IQueryable<Book> GetByAuthor(string firstName, string lastName, string middleName);
-        public Book GetByAuthorAndTitle(string firstName, string lastName, string middleName, string title);
+        public Book GetByAuthorAndTitle
+            (
+                string firstName, 
+                string lastName, 
+                string middleName, 
+                string title
+            );
         public Book GetByAuthorIdAndTitle(int authorId, string title);
         public void Add([FromBody] Book value);
         public void Delete([FromBody] Book value);

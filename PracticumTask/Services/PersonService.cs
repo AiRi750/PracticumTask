@@ -18,10 +18,13 @@ namespace PracticumTask.Services
         public Person Get(int id) => context.People.Find(id);
 
         public Person Get(string firstName, string lastName, string middleName)
-            => context.People.FirstOrDefault(x =>
+            => context.People.FirstOrDefault
+            (
+                x =>
                 x.FirstName == firstName &&
                 x.LastName == lastName &&
-                x.MiddleName == middleName);
+                x.MiddleName == middleName
+            );
 
         public void Add([FromBody] Person value) => context.Add(value);
 
