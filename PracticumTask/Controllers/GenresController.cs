@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using PracticumTask.Models;
 using PracticumTask.Services;
+using PracticumTask.Extensions;
 
 namespace PracticumTask.Controllers
 {
@@ -17,16 +18,7 @@ namespace PracticumTask.Controllers
         public GenresController(IGenreService service) => genreService = service;
 
         [HttpGet]
-        public IAsyncEnumerable<Genre> Get() => genreService.GetAll();
-
-        [HttpGet("{id:int}")]
-        public async Task<IActionResult> Get(int id)
-        {
-            var genre = genreService.Get(id);
-            if (genre == null)
-                return NotFound();
-            return Ok(genre);
-        }
+        public IQueryable<GenreDto> Get() => genreService.GetAll().ToDto();
 
         [HttpGet("{name}")]
         public async Task<IActionResult> Get(string name)
@@ -34,7 +26,7 @@ namespace PracticumTask.Controllers
             var genre = genreService.Get(name);
             if (genre == null)
                 return NotFound();
-            return Ok(genre);
+            return Ok(genre.ToDto());
         }
 
         [HttpPost]
@@ -46,7 +38,7 @@ namespace PracticumTask.Controllers
 
             genreService.Add(value);
             genreService.Save();
-            return Ok(genreService.GetAll());
+            return Ok(genreService.GetAll().ToDto());
         }
 
         [HttpDelete("{name}")]

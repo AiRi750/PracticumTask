@@ -13,9 +13,7 @@ namespace PracticumTask.Services
 
         public GenreService(ApplicationContext context) => this.context = context;
 
-        public IAsyncEnumerable<Genre> GetAll() => context.Genres;
-
-        public Genre Get(int id) => context.Genres.Find(id);
+        public IQueryable<Genre> GetAll() => context.Genres;
 
         public Genre Get(string name) => context.Genres.FirstOrDefault(x => x.Name == name);
 

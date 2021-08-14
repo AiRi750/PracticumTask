@@ -9,8 +9,7 @@ namespace PracticumTask.Services
 {
     public interface IGenreService
     {
-        public IAsyncEnumerable<Genre> GetAll();
-        public Genre Get(int id);
+        public IQueryable<Genre> GetAll();
         public Genre Get(string name);
         public void Add([FromBody] Genre value);
         public void Delete([FromBody] Genre value);
