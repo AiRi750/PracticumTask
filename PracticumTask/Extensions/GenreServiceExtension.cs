@@ -10,7 +10,7 @@ namespace PracticumTask.Extensions
     public static class GenreServiceExtension
     {
         public static IQueryable<GenreDto> ToDto(this IQueryable<Genre> genres)
-            => genres.Select(x => new GenreDto { Name = x.Name });
+            => genres.Select(x => x.ToDto());
 
         public static GenreDto ToDto(this Genre genre)
             => new GenreDto { Name = genre.Name };
