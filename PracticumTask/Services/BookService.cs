@@ -17,7 +17,7 @@ namespace PracticumTask.Services
 
         public Book Get(int id) => context.Books.Find(id);
 
-        public IQueryable<Book> GetByAuthor(string firstName, string lastName, string middleName) 
+        public IQueryable<Book> GetAllByAuthor(string firstName, string lastName, string middleName) 
             => context.Books.Where
             (
                 x =>

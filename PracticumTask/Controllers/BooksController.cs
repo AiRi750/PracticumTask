@@ -20,13 +20,13 @@ namespace PracticumTask.Controllers
         [HttpGet]
         public IQueryable<BookDto> GetAll() => bookService.GetAll().ToDto();
 
-        [HttpGet("{authorId}")]
-        public async Task<IActionResult> Get(int authorId)
+        [HttpGet("authorFullName")]
+        public async Task<IActionResult> Get(string firstName, string lastName, string middleName)
         {
-            var book = bookService.Get(authorId);
-            if (book == null)
+            var books = bookService.GetAllByAuthor(firstName, lastName, middleName);
+            if (books == null)
                 return NotFound();
-            return Ok(book.ToDto());
+            return Ok(books.ToDto());
         }
 
         [HttpPost]

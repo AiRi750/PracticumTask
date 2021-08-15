@@ -11,7 +11,7 @@ namespace PracticumTask.Services
     {
         public IQueryable<Book> GetAll();
         public Book Get(int id);
-        public IQueryable<Book> GetByAuthor(string firstName, string lastName, string middleName);
+        public IQueryable<Book> GetAllByAuthor(string firstName, string lastName, string middleName);
         public Book GetByAuthorAndTitle
             (
                 string firstName, 
