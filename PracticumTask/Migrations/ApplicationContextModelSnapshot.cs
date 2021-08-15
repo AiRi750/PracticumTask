@@ -70,27 +70,6 @@ namespace PracticumTask.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Authors");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            FirstName = "Иван",
-                            LastName = "Иванов",
-                            MiddleName = "Иванович"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            FirstName = "Пётр",
-                            LastName = "Петров"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            FirstName = "Тумба",
-                            LastName = "Юмба"
-                        });
                 });
 
             modelBuilder.Entity("PracticumTask.Models.Book", b =>
@@ -112,26 +91,6 @@ namespace PracticumTask.Migrations
                     b.HasIndex("AuthorId");
 
                     b.ToTable("Books");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            AuthorId = 1,
-                            Title = "На волнах галоперидола"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            AuthorId = 2,
-                            Title = "Плачут ли программисты"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            AuthorId = 3,
-                            Title = "Подебажим?"
-                        });
                 });
 
             modelBuilder.Entity("PracticumTask.Models.Genre", b =>
@@ -148,23 +107,6 @@ namespace PracticumTask.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Genres");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Приключения"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Фантастика"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "Роман"
-                        });
                 });
 
             modelBuilder.Entity("PracticumTask.Models.Person", b =>
@@ -191,31 +133,6 @@ namespace PracticumTask.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("People");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Birthdate = new DateTime(1943, 6, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            FirstName = "Сергей",
-                            LastName = "Драгун",
-                            MiddleName = "Автоматов"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Birthdate = new DateTime(1985, 3, 7, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            FirstName = "Дмитрий",
-                            LastName = "Пушкин"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Birthdate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            FirstName = "Александр",
-                            LastName = "Чехов",
-                            MiddleName = "Алексеевич"
-                        });
                 });
 
             modelBuilder.Entity("BookGenre", b =>
