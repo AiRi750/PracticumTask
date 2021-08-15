@@ -95,5 +95,17 @@ namespace PracticumTask.Controllers
             personService.Save();
             return Ok();
         }
+
+        [HttpDelete("{id:int}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var person = personService.Get(id);
+            if (person == null)
+                return NotFound();
+
+            personService.Delete(person);
+            personService.Save();
+            return Ok();
+        }
     }
 }
