@@ -43,7 +43,45 @@ namespace PracticumTask.Controllers
 
             personService.Add(value);
             personService.Save();
-            return Ok(personService.GetAll().ToDto());
+            return Ok(value.ToDto());
+        }
+
+        [HttpPost]
+        [Route("UpdatePerson")]
+        public async Task<IActionResult> Post
+            (
+                [FromBody] Person oldValue, 
+                string firstName, 
+                string lastName, 
+                string middleName, 
+                DateTime? birthdate
+            )
+        {
+            var oldPerson = personService.Get
+            (
+                oldValue.FirstName,
+                oldValue.LastName,
+                oldValue.MiddleName
+            );
+            if (oldPerson == null)
+                return NotFound();
+
+            var newPerson = personService.Get
+            (
+                firstName,
+                lastName,
+                middleName == null ? oldValue.MiddleName : middleName
+            );
+            if (newPerson != null)
+                return Conflict();
+
+            oldPerson.FirstName = firstName;
+            oldPerson.LastName = lastName;
+            oldPerson.MiddleName = middleName == null ? oldValue.MiddleName : middleName;
+            oldPerson.Birthdate = birthdate == null ? oldValue.Birthdate : birthdate;
+
+            personService.Save();
+            return Ok(oldPerson.ToDto());
         }
 
         [HttpDelete]
