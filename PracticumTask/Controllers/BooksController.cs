@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using PracticumTask.Models;
 using PracticumTask.Services;
+using PracticumTask.Extensions;
 
 namespace PracticumTask.Controllers
 {
@@ -17,15 +18,15 @@ namespace PracticumTask.Controllers
         public BooksController(IBookService service) => bookService = service;
 
         [HttpGet]
-        public IQueryable<Book> Get() => bookService.GetAll();
+        public IQueryable<BookDto> GetAll() => bookService.GetAll().ToDto();
 
         [HttpGet("{authorId}")]
-        public async Task<IActionResult> Get(int id)
+        public async Task<IActionResult> Get(int authorId)
         {
-            var book = bookService.Get(id);
+            var book = bookService.Get(authorId);
             if (book == null)
                 return NotFound();
-            return Ok(book);
+            return Ok(book.ToDto());
         }
 
         [HttpPost]
@@ -43,7 +44,7 @@ namespace PracticumTask.Controllers
 
             bookService.Add(value);
             bookService.Save();
-            return Ok(bookService.GetAll());
+            return Ok(bookService.GetAll().ToDto());
         }
 
         [HttpDelete]
