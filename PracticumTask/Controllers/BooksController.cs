@@ -17,22 +17,27 @@ namespace PracticumTask.Controllers
         public BooksController(IBookService service) => bookService = service;
 
         [HttpGet]
-        public IAsyncEnumerable<Book> Get() => bookService.GetAll();
+        public IQueryable<Book> Get() => bookService.GetAll();
 
         [HttpGet("{authorId}")]
         public async Task<IActionResult> Get(int id)
         {
-            var books = bookService.Get(id);
-            if (books == null)
+            var book = bookService.Get(id);
+            if (book == null)
                 return NotFound();
-            return Ok(books);
+            return Ok(book);
         }
 
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] Book value)
         {
-            var book = bookService.GetByAuthorAndTitle(
-                value.Author.FirstName, value.Author.LastName, value.Author.MiddleName, value.Title);
+            var book = bookService.GetByAuthorAndTitle
+                (
+                    value.Author.FirstName, 
+                    value.Author.LastName, 
+                    value.Author.MiddleName, 
+                    value.Title
+                );
             if (book != null)
                 return Conflict();
 

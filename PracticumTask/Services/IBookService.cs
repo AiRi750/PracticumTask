@@ -9,7 +9,7 @@ namespace PracticumTask.Services
 {
     public interface IBookService
     {
-        public IAsyncEnumerable<Book> GetAll();
+        public IQueryable<Book> GetAll();
         public Book Get(int id);
         public IQueryable<Book> GetByAuthor(string firstName, string lastName, string middleName);
         public Book GetByAuthorAndTitle

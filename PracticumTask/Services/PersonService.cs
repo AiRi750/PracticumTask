@@ -13,7 +13,7 @@ namespace PracticumTask.Services
 
         public PersonService(ApplicationContext context) => this.context = context;
 
-        public IAsyncEnumerable<Person> GetAll() => context.People;
+        public IQueryable<Person> GetAll() => context.People;
 
         public Person Get(int id) => context.People.Find(id);
 
