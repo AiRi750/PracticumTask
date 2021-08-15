@@ -12,6 +12,6 @@ namespace PracticumTask.Models
 
         public string MiddleName { get; set; }
 
-        public DateTime Birthdate { get; set; }
+        public DateTime? Birthdate { get; set; }
     }
 }

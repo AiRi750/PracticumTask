@@ -24,7 +24,7 @@ namespace PracticumTask.Controllers
         public async Task<IActionResult> Get(string firstName, string lastName, string middleName)
         {
             var books = bookService.GetAllByAuthor(firstName, lastName, middleName);
-            if (books == null)
+            if (books.FirstOrDefault() == null)
                 return NotFound();
             return Ok(books.ToDto());
         }
@@ -32,11 +32,9 @@ namespace PracticumTask.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] Book value)
         {
-            var book = bookService.GetByAuthorAndTitle
+            var book = bookService.GetByAuthorIdAndTitle
                 (
-                    value.Author.FirstName, 
-                    value.Author.LastName, 
-                    value.Author.MiddleName, 
+                    value.AuthorId,
                     value.Title
                 );
             if (book != null)
