@@ -87,11 +87,12 @@ namespace PracticumTask.Controllers
         [HttpDelete]
         public async Task<IActionResult> Delete(string firstName, string lastName, string middleName)
         {
-            var person = personService.Get(firstName, lastName, middleName);
-            if (person == null)
+            var people = personService.GetAll(firstName, lastName, middleName);
+            if (people.FirstOrDefault() == null)
                 return NotFound();
 
-            personService.Delete(person);
+            foreach (var person in people)
+                personService.Delete(person);
             personService.Save();
             return Ok();
         }

@@ -10,6 +10,7 @@ namespace PracticumTask.Services
     public interface IPersonService
     {
         public IQueryable<Person> GetAll();
+        public IQueryable<Person> GetAll(string firstName, string lastName, string middleName);
         public Person Get(int id);
         public Person Get(string firstName, string lastName, string middleName);
         public void Add([FromBody] Person value);

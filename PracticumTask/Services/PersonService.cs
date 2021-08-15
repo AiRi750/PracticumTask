@@ -15,6 +15,15 @@ namespace PracticumTask.Services
 
         public IQueryable<Person> GetAll() => context.People;
 
+        public IQueryable<Person> GetAll(string firstName, string lastName, string middleName)
+            => context.People.Where
+            (
+                x =>
+                x.FirstName == firstName &&
+                x.LastName == lastName &&
+                x.MiddleName == middleName
+            );
+
         public Person Get(int id) => context.People.Find(id);
 
         public Person Get(string firstName, string lastName, string middleName)
