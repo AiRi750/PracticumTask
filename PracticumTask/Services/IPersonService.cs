@@ -11,6 +11,7 @@ namespace PracticumTask.Services
     {
         public IQueryable<Person> GetAll();
         public IQueryable<Person> GetAll(string firstName, string lastName, string middleName);
+        public IQueryable<Book> GetAllBooks(int personId);
         public Person Get(int id);
         public Person Get(string firstName, string lastName, string middleName);
         public void Add([FromBody] Person value);

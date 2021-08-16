@@ -20,6 +20,11 @@ namespace PracticumTask.Controllers
         [HttpGet]
         public IQueryable<PersonDto> GetAll() => personService.GetAll().ToDto();
 
+        //Получить список всех взятых пользователем книг (GET) в качестве параметра поиска - ID пользователя. Полное дерево: Книги - автор - жанр
+        //todo make detailedDto
+        [HttpGet("personBooks")]
+        public IQueryable<BookDto> GetAllBooks(int personId) => personService.GetAllBooks(personId).ToDto();
+
         [HttpGet("byFullName")]
         public async Task<IActionResult> Get(string firstName, string lastName, string middleName)
         {

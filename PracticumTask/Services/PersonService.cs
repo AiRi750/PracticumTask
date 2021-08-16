@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using PracticumTask.Models;
 using System;
 using System.Collections.Generic;
@@ -23,6 +24,11 @@ namespace PracticumTask.Services
                 x.LastName == lastName &&
                 x.MiddleName == middleName
             );
+
+        public IQueryable<Book> GetAllBooks(int personId)
+            => context.Books
+                .Include(x => x.People.Where(x => x.Id == personId))
+                .Where(x => x.People.Count > 0);
 
         public Person Get(int id) => context.People.Find(id);
 
