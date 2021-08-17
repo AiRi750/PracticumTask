@@ -111,10 +111,10 @@ namespace PracticumTask.Models
 
             var peopleBooks = new PersonBook[]
             {
-                new PersonBook { Person = people[0], Book = books[0] },
-                new PersonBook { Person = people[0], Book = books[1] },
-                new PersonBook { Person = people[1], Book = books[1] },
-                new PersonBook { Person = people[1], Book = books[2] },
+                new PersonBook { PersonId = people[0].Id, BookId = books[0].Id },
+                new PersonBook { PersonId = people[0].Id, BookId = books[1].Id },
+                new PersonBook { PersonId = people[1].Id, BookId = books[1].Id },
+                new PersonBook { PersonId = people[1].Id, BookId = books[2].Id }
             };
 
             builder.Entity<PersonBook>().HasData(peopleBooks);
