@@ -18,6 +18,6 @@ namespace PracticumTask.Models
 
         public Author Author { get; set; }
         public List<Genre> Genres { get; set; } = new List<Genre>();
-        public List<Person> People { get; set; } = new List<Person>();
+        public List<PersonBook> PeopleBooks { get; set; } = new List<PersonBook>();
     }
 }

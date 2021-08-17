@@ -27,8 +27,8 @@ namespace PracticumTask.Services
 
         public IQueryable<Book> GetAllBooks(int personId)
             => context.Books
-                .Include(x => x.People.Where(x => x.Id == personId))
-                .Where(x => x.People.Count > 0);
+                .Include(x => x.PeopleBooks.Where(y => y.PersonId == personId))
+                .Where(z => z.PeopleBooks.Count > 0);
 
         public Person Get(int id) => context.People.Find(id);
 

@@ -12,6 +12,7 @@ namespace PracticumTask.Models
         public DbSet<Book> Books { get; set; }
         public DbSet<Genre> Genres { get; set; }
         public DbSet<Person> People { get; set; }
+        public DbSet<PersonBook> PeopleBooks { get; set; }
 
         public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
         {
@@ -20,6 +21,8 @@ namespace PracticumTask.Models
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            builder.Entity<PersonBook>().HasKey(x => new { x.PersonId, x.BookId });
+
             var genres = new Genre[]
             {
                 new Genre() { Id = 1, Name = "Приключения" },
@@ -105,6 +108,16 @@ namespace PracticumTask.Models
             };
 
             builder.Entity<Person>().HasData(people);
+
+            var peopleBooks = new PersonBook[]
+            {
+                new PersonBook { Person = people[0], Book = books[0] },
+                new PersonBook { Person = people[0], Book = books[1] },
+                new PersonBook { Person = people[1], Book = books[1] },
+                new PersonBook { Person = people[1], Book = books[2] },
+            };
+
+            builder.Entity<PersonBook>().HasData(peopleBooks);
         }
     }
 }
