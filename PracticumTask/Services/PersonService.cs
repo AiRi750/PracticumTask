@@ -30,6 +30,11 @@ namespace PracticumTask.Services
                 .Where(pb => pb.PersonId == personId)
                 .Select(pb => pb.Book);
 
+        public Book GetBook(int bookId) => context.Books.Find(bookId);
+
+        public PersonBook GetPersonBook(int personId, int bookId)
+            => context.PeopleBooks.Find(personId, bookId);
+
         public Person Get(int id) => context.People.Find(id);
 
         public Person Get(string firstName, string lastName, string middleName)
@@ -42,6 +47,9 @@ namespace PracticumTask.Services
             );
 
         public void Add([FromBody] Person value) => context.Add(value);
+
+        public void AddBook([FromBody] PersonBook value) 
+            => context.PeopleBooks.Add(value);
 
         public void Delete([FromBody] Person value) => context.Remove(value);
 

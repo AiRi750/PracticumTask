@@ -52,6 +52,21 @@ namespace PracticumTask.Controllers
         }
 
         [HttpPost]
+        [Route("AddPersonBook")]
+        public async Task<IActionResult> AddPersonBook([FromBody] PersonBook value)
+        {
+            if (personService.Get(value.PersonId) == null ||
+                personService.GetBook(value.BookId) == null)
+                return NotFound();
+            if (personService.GetPersonBook(value.PersonId, value.BookId) != null)
+                return Conflict();
+
+            personService.AddBook(value);
+            personService.Save();
+            return Ok();
+        }
+
+        [HttpPost]
         [Route("UpdatePerson")]
         public async Task<IActionResult> Post
             (
