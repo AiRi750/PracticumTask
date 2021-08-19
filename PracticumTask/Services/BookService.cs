@@ -13,11 +13,11 @@ namespace PracticumTask.Services
 
         public BookService(ApplicationContext context) => this.context = context;
 
-        public IQueryable<Book> GetAll() => context.Books;
+        public IEnumerable<Book> GetAll() => context.Books;
 
         public Book Get(int id) => context.Books.Find(id);
 
-        public IQueryable<Book> GetAllByAuthor(string firstName, string lastName, string middleName) 
+        public IEnumerable<Book> GetAllByAuthor(string firstName, string lastName, string middleName) 
             => context.Books.Where
             (
                 x =>

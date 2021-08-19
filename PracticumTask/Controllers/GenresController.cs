@@ -18,7 +18,7 @@ namespace PracticumTask.Controllers
         public GenresController(IGenreService service) => genreService = service;
 
         [HttpGet]
-        public IQueryable<GenreDto> Get() => genreService.GetAll().ToDto();
+        public IEnumerable<GenreDto> Get() => genreService.GetAll().ToDto();
 
         [HttpGet("{name}")]
         public async Task<IActionResult> Get(string name)

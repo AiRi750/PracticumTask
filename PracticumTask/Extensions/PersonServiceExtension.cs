@@ -8,7 +8,7 @@ namespace PracticumTask.Extensions
 {
     public static class PersonServiceExtension
     {
-        public static IQueryable<PersonDto> ToDto(this IQueryable<Person> people)
+        public static IEnumerable<PersonDto> ToDto(this IEnumerable<Person> people)
             => people.Select(x => x.ToDto());
 
         public static PersonDto ToDto(this Person person)

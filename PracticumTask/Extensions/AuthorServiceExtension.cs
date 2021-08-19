@@ -8,7 +8,7 @@ namespace PracticumTask.Extensions
 {
     public static class AuthorServiceExtension
     {
-        public static IQueryable<AuthorDto> ToDto(this IQueryable<Author> authors)
+        public static IEnumerable<AuthorDto> ToDto(this IEnumerable<Author> authors)
             => authors.Select(x => x.ToDto());
 
         public static AuthorDto ToDto(this Author author)

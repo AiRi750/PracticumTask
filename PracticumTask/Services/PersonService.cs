@@ -14,9 +14,9 @@ namespace PracticumTask.Services
 
         public PersonService(ApplicationContext context) => this.context = context;
 
-        public IQueryable<Person> GetAll() => context.People;
+        public IEnumerable<Person> GetAll() => context.People;
 
-        public IQueryable<Person> GetAll(string firstName, string lastName, string middleName)
+        public IEnumerable<Person> GetAll(string firstName, string lastName, string middleName)
             => context.People.Where
             (
                 x =>
@@ -25,11 +25,10 @@ namespace PracticumTask.Services
                 x.MiddleName == middleName
             );
 
-        public IQueryable<Book> GetAllBooks(int personId)
+        public IEnumerable<Book> GetAllBooks(int personId)
             => context.PeopleBooks
                 .Where(pb => pb.PersonId == personId)
                 .Select(pb => pb.Book);
-        
 
         public Person Get(int id) => context.People.Find(id);
 

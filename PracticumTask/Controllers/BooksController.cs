@@ -18,7 +18,7 @@ namespace PracticumTask.Controllers
         public BooksController(IBookService service) => bookService = service;
 
         [HttpGet]
-        public IQueryable<BookDto> GetAll() => bookService.GetAll().ToDto();
+        public IEnumerable<BookDto> GetAll() => bookService.GetAll().ToDto();
 
         [HttpGet("authorFullName")]
         public async Task<IActionResult> Get(string firstName, string lastName, string middleName)

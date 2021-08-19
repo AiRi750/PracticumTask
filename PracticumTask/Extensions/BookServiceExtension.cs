@@ -8,7 +8,7 @@ namespace PracticumTask.Extensions
 {
     public static class BookServiceExtension
     {
-        public static IQueryable<BookDto> ToDto(this IQueryable<Book> books)
+        public static IEnumerable<BookDto> ToDto(this IEnumerable<Book> books)
             => books.Select(x => x.ToDto());
 
         public static BookDto ToDto(this Book book)

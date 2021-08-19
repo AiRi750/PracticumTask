@@ -18,7 +18,7 @@ namespace PracticumTask.Controllers
         public AuthorsController(IAuthorService service) => authorService = service;
 
         [HttpGet]
-        public IQueryable<AuthorDto> GetAll() => authorService.GetAll().ToDto();
+        public IEnumerable<AuthorDto> GetAll() => authorService.GetAll().ToDto();
 
         [HttpGet("{firstName}")]
         public async Task<IActionResult> Get(string firstName)
