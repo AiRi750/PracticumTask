@@ -19,6 +19,7 @@ namespace PracticumTask.Services
         public void Add([FromBody] Person value);
         public void AddBook([FromBody] PersonBook value);
         public void Delete([FromBody] Person value);
+        public void DeletePersonBook([FromBody] PersonBook value);
         public void Save();
     }
 }

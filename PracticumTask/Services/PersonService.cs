@@ -53,6 +53,8 @@ namespace PracticumTask.Services
 
         public void Delete([FromBody] Person value) => context.Remove(value);
 
+        public void DeletePersonBook([FromBody] PersonBook value) => context.Remove(value);
+
         public void Save() => context.SaveChanges();
     }
 }

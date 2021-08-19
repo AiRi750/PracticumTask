@@ -128,5 +128,17 @@ namespace PracticumTask.Controllers
             personService.Save();
             return Ok();
         }
+
+        [HttpDelete("RemovePersonBook")]
+        public async Task<IActionResult> Delete([FromBody] PersonBook value)
+        {
+            var personBook = personService.GetPersonBook(value.PersonId, value.BookId);
+            if (personBook == null)
+                return NotFound();
+
+            personService.DeletePersonBook(personBook);
+            personService.Save();
+            return Ok();
+        }
     }
 }
