@@ -16,6 +16,12 @@ namespace PracticumTask.Services
 
         public IEnumerable<Book> GetAll() => context.Books;
 
+        public IEnumerable<Book> GetAllByGenre(string genreName)
+            => context.Genres
+                .Include(genre => genre.Books)
+                .Where(genre => genre.Name == genreName)
+                .SelectMany(genre => genre.Books);
+
         public Book Get(int id) => context.Books.Find(id);
 
         public IEnumerable<Book> GetAllByAuthor(string firstName, string lastName, string middleName) 

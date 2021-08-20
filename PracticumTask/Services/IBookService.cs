@@ -10,8 +10,9 @@ namespace PracticumTask.Services
     public interface IBookService
     {
         public IEnumerable<Book> GetAll();
-        public Book Get(int id);
         public IEnumerable<Book> GetAllByAuthor(string firstName, string lastName, string middleName);
+        public IEnumerable<Book> GetAllByGenre(string genreName);
+        public Book Get(int id);
         public Book GetByAuthorAndTitle
             (
                 string firstName, 
