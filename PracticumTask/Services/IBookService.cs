@@ -21,6 +21,7 @@ namespace PracticumTask.Services
             );
         public Book GetByAuthorIdAndTitle(int authorId, string title);
         public bool IsAuthorExists([FromBody] Author value);
+        public bool IsBookTaken(int bookId);
         public IEnumerable<Genre> GetAllGenres();
         public void Add([FromBody] Book value);
         public void AddAuthor([FromBody] Author value);

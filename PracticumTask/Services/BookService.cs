@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using PracticumTask.Models;
 using System;
 using System.Collections.Generic;
@@ -58,6 +59,10 @@ namespace PracticumTask.Services
                     x.LastName == value.LastName &&
                     x.MiddleName == value.MiddleName
                 ) != null;
+
+        public bool IsBookTaken(int bookId)
+            => context.PeopleBooks
+                .FirstOrDefault(x => x.BookId == bookId) != null;
 
         public IEnumerable<Genre> GetAllGenres() => context.Genres;
 

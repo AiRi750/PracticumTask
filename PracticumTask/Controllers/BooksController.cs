@@ -48,11 +48,13 @@ namespace PracticumTask.Controllers
         }
 
         [HttpDelete]
-        public async Task<IActionResult> Delete(int authorId, string title)
+        public async Task<IActionResult> Delete(int bookId)
         {
-            var book = bookService.GetByAuthorIdAndTitle(authorId, title);
+            var book = bookService.Get(bookId);
             if (book == null)
                 return NotFound();
+            if (bookService.IsBookTaken(bookId))
+                return BadRequest("Ошибка - книга у пользователя");
 
             bookService.Delete(book);
             bookService.Save();
