@@ -29,22 +29,44 @@ namespace PracticumTask.Controllers
             return Ok(books.ToDto());
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Post([FromBody] Book value)
+        [HttpPut("addGenre")]
+        public async Task<IActionResult> PutAdd([FromBody] Book value, string genreName)
         {
-            var book = bookService.GetByAuthorIdAndTitle(value.AuthorId, value.Title);
-            if (book != null)
+            var book = bookService.GetByAuthorAndTitle
+                (
+                    value.Author.FirstName, 
+                    value.Author.LastName, 
+                    value.Author.MiddleName, 
+                    value.Title
+                );
+            if (book == null)
+                return NotFound();
+            if (!bookService.IsGenreExists(genreName))
+                bookService.AddGenre(genreName);
+            if (bookService.IsBookHasGenre(book, genreName))
                 return Conflict();
-            if (!bookService.IsAuthorExists(value.Author))
-                bookService.AddAuthor(value.Author);
 
-            var genres = value.Genres.Except(bookService.GetAllGenres());
-            foreach (var genre in genres)
-                bookService.AddGenre(genre);
-
-            bookService.Add(value);
+            bookService.AddGenreToBook(book, genreName);
             bookService.Save();
-            return Ok(bookService.GetAll().ToDto());
+            return Ok();
+        }
+
+        [HttpPut("deleteGenre")]
+        public async Task<IActionResult> PutDelete([FromBody] Book value, string genreName)
+        {
+            var book = bookService.GetByAuthorAndTitle
+                (
+                    value.Author.FirstName,
+                    value.Author.LastName,
+                    value.Author.MiddleName,
+                    value.Title
+                );
+            if (book == null || !bookService.IsBookHasGenre(book, genreName))
+                return NotFound();
+
+            bookService.DeleteGenreFromBook(book, genreName);
+            bookService.Save();
+            return Ok();
         }
 
         [HttpDelete]

@@ -51,6 +51,9 @@ namespace PracticumTask.Services
                 x.Title == title
             );
 
+        public Genre GetGenre(string name)
+            => context.Genres.FirstOrDefault(x => x.Name == name);
+
         public bool IsAuthorExists([FromBody] Author value)
             => context.Authors.FirstOrDefault
                 (
@@ -64,13 +67,25 @@ namespace PracticumTask.Services
             => context.PeopleBooks
                 .FirstOrDefault(x => x.BookId == bookId) != null;
 
+        public bool IsGenreExists(string genre)
+            => context.Genres.FirstOrDefault(x => x.Name == genre) != null;
+
+        public bool IsBookHasGenre([FromBody] Book value, string genreName)
+            => value.Genres.Contains(GetGenre(genreName));
+
         public IEnumerable<Genre> GetAllGenres() => context.Genres;
 
         public void Add([FromBody] Book value) => context.Add(value);
 
         public void AddAuthor([FromBody] Author value) => context.Add(value);
 
-        public void AddGenre([FromBody] Genre value) => context.Add(value);
+        public void AddGenre(string genreName) => context.Add(new Genre() { Name = genreName });
+
+        public void AddGenreToBook([FromBody] Book value, string genre)
+            => value.Genres.Add(GetGenre(genre));
+
+        public void DeleteGenreFromBook([FromBody] Book value, string genreName)
+            => value.Genres.Remove(GetGenre(genreName));
 
         public void Delete([FromBody] Book value) 
             => context.Remove(value);

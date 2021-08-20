@@ -22,10 +22,14 @@ namespace PracticumTask.Services
         public Book GetByAuthorIdAndTitle(int authorId, string title);
         public bool IsAuthorExists([FromBody] Author value);
         public bool IsBookTaken(int bookId);
+        public bool IsGenreExists(string genreName);
+        public bool IsBookHasGenre([FromBody] Book value, string genreName);
         public IEnumerable<Genre> GetAllGenres();
         public void Add([FromBody] Book value);
         public void AddAuthor([FromBody] Author value);
-        public void AddGenre([FromBody] Genre value);
+        public void AddGenre(string genreName);
+        public void AddGenreToBook([FromBody] Book value, string genreName);
+        public void DeleteGenreFromBook([FromBody] Book value, string genreName);
         public void Delete([FromBody] Book value);
         public void Save();
     }
