@@ -20,6 +20,10 @@ namespace PracticumTask.Controllers
         [HttpGet]
         public IEnumerable<BookDto> GetAll() => bookService.GetAll().ToDto();
 
+        [HttpGet("booksByAuthor")]
+        public IEnumerable<BookDto> GetAllByAuthor(string firstName, string lastName, string middleName)
+            => bookService.GetAllByAuthor(firstName, lastName, middleName).ToDto();
+
         [HttpGet("authorFullName")]
         public async Task<IActionResult> Get(string firstName, string lastName, string middleName)
         {
