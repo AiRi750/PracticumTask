@@ -32,13 +32,15 @@ namespace PracticumTask.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] Book value)
         {
-            var book = bookService.GetByAuthorIdAndTitle
-                (
-                    value.AuthorId,
-                    value.Title
-                );
+            var book = bookService.GetByAuthorIdAndTitle(value.AuthorId, value.Title);
             if (book != null)
                 return Conflict();
+            if (!bookService.IsAuthorExists(value.Author))
+                bookService.AddAuthor(value.Author);
+
+            var genres = value.Genres.Except(bookService.GetAllGenres());
+            foreach (var genre in genres)
+                bookService.AddGenre(genre);
 
             bookService.Add(value);
             bookService.Save();

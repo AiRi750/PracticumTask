@@ -20,7 +20,11 @@ namespace PracticumTask.Services
                 string title
             );
         public Book GetByAuthorIdAndTitle(int authorId, string title);
+        public bool IsAuthorExists([FromBody] Author value);
+        public IEnumerable<Genre> GetAllGenres();
         public void Add([FromBody] Book value);
+        public void AddAuthor([FromBody] Author value);
+        public void AddGenre([FromBody] Genre value);
         public void Delete([FromBody] Book value);
         public void Save();
     }

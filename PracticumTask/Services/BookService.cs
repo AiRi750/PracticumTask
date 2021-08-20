@@ -50,7 +50,22 @@ namespace PracticumTask.Services
                 x.Title == title
             );
 
+        public bool IsAuthorExists([FromBody] Author value)
+            => context.Authors.FirstOrDefault
+                (
+                    x =>
+                    x.FirstName == value.FirstName &&
+                    x.LastName == value.LastName &&
+                    x.MiddleName == value.MiddleName
+                ) != null;
+
+        public IEnumerable<Genre> GetAllGenres() => context.Genres;
+
         public void Add([FromBody] Book value) => context.Add(value);
+
+        public void AddAuthor([FromBody] Author value) => context.Add(value);
+
+        public void AddGenre([FromBody] Genre value) => context.Add(value);
 
         public void Delete([FromBody] Book value) 
             => context.Remove(value);
