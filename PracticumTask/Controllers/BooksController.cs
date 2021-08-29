@@ -4,8 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using PracticumTask.Models;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+using PracticumTask.Services;
+using PracticumTask.Extensions;
 
 namespace PracticumTask.Controllers
 {
@@ -13,55 +13,81 @@ namespace PracticumTask.Controllers
     [ApiController]
     public class BooksController : ControllerBase
     {
-        private readonly ApplicationContext context;
+        private readonly IBookService bookService;
 
-        public BooksController(ApplicationContext context)
-        {
-            this.context = context;
-        }
+        public BooksController(IBookService service) => bookService = service;
 
-        // GET: api/<BooksController>
         [HttpGet]
-        public IAsyncEnumerable<Book> Get()
-        {
-            return context.Books;
-        }
+        public IEnumerable<BookDto> GetAll() => bookService.GetAll().ToDto();
 
-        // GET api/<AuthorsController>/5
-        [HttpGet("{authorId}")]
-        public async Task<IActionResult> Get(int id)
+        [HttpGet("booksByGenre")]
+        public IEnumerable<BookDto> GetAllByGenre(string genreName)
+            => bookService.GetAllByGenre(genreName).ToDto();
+
+        [HttpGet("booksByAuthor")]
+        public IEnumerable<BookDto> GetAllByAuthor(string firstName, string lastName, string middleName)
+            => bookService.GetAllByAuthor(firstName, lastName, middleName).ToDto();
+
+        [HttpGet("authorFullName")]
+        public async Task<IActionResult> Get(string firstName, string lastName, string middleName)
         {
-            var books = context.Books.Where(x => x.AuthorId == id);
+            var books = bookService.GetAllByAuthor(firstName, lastName, middleName);
             if (books.FirstOrDefault() == null)
                 return NotFound();
-            return Ok(books);
+            return Ok(books.ToDto());
         }
 
-        // POST api/<BooksController>
-        [HttpPost]
-        public async Task<IActionResult> Post([FromBody] Book value)
+        [HttpPut("addGenre")]
+        public async Task<IActionResult> PutAdd([FromBody] Book value, string genreName)
         {
-            var book = context.Books.FirstOrDefault(x => x.Title == value.Title 
-                && x.AuthorId == value.AuthorId);
-            if (book != null)
-                return new ConflictResult();
-
-            context.Add(value);
-            context.SaveChanges();
-            return Ok(context.Books);
-        }
-
-        // DELETE api/<AuthorsController>/5
-        [HttpDelete]
-        public async Task<IActionResult> Delete([FromBody] Author value, string title)
-        {
-            var book = context.Books
-                .FirstOrDefault(x => x.Title == title && x.AuthorId == value.Id);
+            var book = bookService.GetByAuthorAndTitle
+                (
+                    value.Author.FirstName, 
+                    value.Author.LastName, 
+                    value.Author.MiddleName, 
+                    value.Title
+                );
             if (book == null)
                 return NotFound();
+            if (!bookService.IsGenreExists(genreName))
+                bookService.AddGenre(genreName);
+            if (bookService.IsBookHasGenre(book, genreName))
+                return Conflict();
 
-            context.Remove(book);
-            context.SaveChanges();
+            bookService.AddGenreToBook(book, genreName);
+            bookService.Save();
+            return Ok();
+        }
+
+        [HttpPut("deleteGenre")]
+        public async Task<IActionResult> PutDelete([FromBody] Book value, string genreName)
+        {
+            var book = bookService.GetByAuthorAndTitle
+                (
+                    value.Author.FirstName,
+                    value.Author.LastName,
+                    value.Author.MiddleName,
+                    value.Title
+                );
+            if (book == null || !bookService.IsBookHasGenre(book, genreName))
+                return NotFound();
+
+            bookService.DeleteGenreFromBook(book, genreName);
+            bookService.Save();
+            return Ok();
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> Delete(int bookId)
+        {
+            var book = bookService.Get(bookId);
+            if (book == null)
+                return NotFound();
+            if (bookService.IsBookTaken(bookId))
+                return BadRequest("Ошибка - книга у пользователя");
+
+            bookService.Delete(book);
+            bookService.Save();
             return Ok();
         }
     }

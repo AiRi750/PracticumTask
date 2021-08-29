@@ -4,8 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using PracticumTask.Models;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+using PracticumTask.Services;
+using PracticumTask.Extensions;
 
 namespace PracticumTask.Controllers
 {
@@ -13,53 +13,43 @@ namespace PracticumTask.Controllers
     [ApiController]
     public class GenresController : ControllerBase
     {
-        private readonly ApplicationContext context;
+        private readonly IGenreService genreService;
 
-        public GenresController(ApplicationContext context)
-        {
-            this.context = context;
-        }
+        public GenresController(IGenreService service) => genreService = service;
 
-        // GET: api/<GenresController>
         [HttpGet]
-        public IAsyncEnumerable<Genre> Get()
-        {
-            return context.Genres;
-        }
+        public IEnumerable<GenreDto> Get() => genreService.GetAll().ToDto();
 
-        // GET api/<GenresController>/5
-        [HttpGet("{id}")]
-        public async Task<IActionResult> Get(int id)
+        [HttpGet("{name}")]
+        public async Task<IActionResult> Get(string name)
         {
-            var genre = await context.Genres.FindAsync(id);
+            var genre = genreService.Get(name);
             if (genre == null)
                 return NotFound();
-            return Ok(genre);
+            return Ok(genre.ToDto());
         }
 
-        // POST api/<GenresController>
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] Genre value)
         {
-            var genre = context.Genres.FirstOrDefault(x => x.Name == value.Name); //todo - refactor to async?
+            var genre = genreService.Get(value.Name);
             if (genre != null)
-                return new ConflictResult();
-            
-            context.Add(value);
-            context.SaveChanges();
-            return Ok(context.Genres);
+                return Conflict();
+
+            genreService.Add(value);
+            genreService.Save();
+            return Ok(genreService.GetAll().ToDto());
         }
 
-        // DELETE api/<GenresController>/5
         [HttpDelete("{name}")]
         public async Task<IActionResult> Delete(string name)
         {
-            var genre = context.Genres.FirstOrDefault(x => x.Name == name);
+            var genre = genreService.Get(name);
             if (genre == null)
                 return NotFound();
 
-            context.Remove(genre);
-            context.SaveChanges();
+            genreService.Delete(genre);
+            genreService.Save();
             return Ok();
         }
     }

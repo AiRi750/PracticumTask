@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using PracticumTask.Models;
@@ -9,9 +10,10 @@ using PracticumTask.Models;
 namespace PracticumTask.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20210815191129_InitialCreateV2")]
+    partial class InitialCreateV2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -32,6 +34,21 @@ namespace PracticumTask.Migrations
                     b.HasIndex("GenresId");
 
                     b.ToTable("BookGenre");
+                });
+
+            modelBuilder.Entity("BookPerson", b =>
+                {
+                    b.Property<int>("BooksId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("PeopleId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("BooksId", "PeopleId");
+
+                    b.HasIndex("PeopleId");
+
+                    b.ToTable("BookPerson");
                 });
 
             modelBuilder.Entity("PracticumTask.Models.Author", b =>
@@ -202,43 +219,6 @@ namespace PracticumTask.Migrations
                         });
                 });
 
-            modelBuilder.Entity("PracticumTask.Models.PersonBook", b =>
-                {
-                    b.Property<int>("PersonId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("BookId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("PersonId", "BookId");
-
-                    b.HasIndex("BookId");
-
-                    b.ToTable("PeopleBooks");
-
-                    b.HasData(
-                        new
-                        {
-                            PersonId = 1,
-                            BookId = 1
-                        },
-                        new
-                        {
-                            PersonId = 1,
-                            BookId = 2
-                        },
-                        new
-                        {
-                            PersonId = 2,
-                            BookId = 2
-                        },
-                        new
-                        {
-                            PersonId = 2,
-                            BookId = 3
-                        });
-                });
-
             modelBuilder.Entity("BookGenre", b =>
                 {
                     b.HasOne("PracticumTask.Models.Book", null)
@@ -254,6 +234,21 @@ namespace PracticumTask.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("BookPerson", b =>
+                {
+                    b.HasOne("PracticumTask.Models.Book", null)
+                        .WithMany()
+                        .HasForeignKey("BooksId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("PracticumTask.Models.Person", null)
+                        .WithMany()
+                        .HasForeignKey("PeopleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("PracticumTask.Models.Book", b =>
                 {
                     b.HasOne("PracticumTask.Models.Author", "Author")
@@ -265,38 +260,9 @@ namespace PracticumTask.Migrations
                     b.Navigation("Author");
                 });
 
-            modelBuilder.Entity("PracticumTask.Models.PersonBook", b =>
-                {
-                    b.HasOne("PracticumTask.Models.Book", "Book")
-                        .WithMany("PeopleBooks")
-                        .HasForeignKey("BookId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("PracticumTask.Models.Person", "Person")
-                        .WithMany("PeopleBooks")
-                        .HasForeignKey("PersonId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Book");
-
-                    b.Navigation("Person");
-                });
-
             modelBuilder.Entity("PracticumTask.Models.Author", b =>
                 {
                     b.Navigation("Books");
-                });
-
-            modelBuilder.Entity("PracticumTask.Models.Book", b =>
-                {
-                    b.Navigation("PeopleBooks");
-                });
-
-            modelBuilder.Entity("PracticumTask.Models.Person", b =>
-                {
-                    b.Navigation("PeopleBooks");
                 });
 #pragma warning restore 612, 618
         }
