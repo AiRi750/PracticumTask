@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using PracticumTask.BusinessLogic.Services.Interfaces;
 using PracticumTask.Database;
 using PracticumTask.Database.Entities;
+using PracticumTask.Database.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,9 +13,9 @@ namespace PracticumTask.BusinessLogic.Services
 {
     public class PersonService : IPersonService
     {
-        private readonly ApplicationContext context;
+        private readonly IApplicationContext context;
 
-        public PersonService(ApplicationContext context) => this.context = context;
+        public PersonService(IApplicationContext context) => this.context = context;
 
         public IEnumerable<Person> GetAll() => context.People;
 
@@ -48,14 +49,14 @@ namespace PracticumTask.BusinessLogic.Services
                 x.MiddleName == middleName
             );
 
-        public void Add([FromBody] Person value) => context.Add(value);
+        public void Add([FromBody] Person value) => context.People.Add(value);
 
         public void AddBook([FromBody] PersonBook value)
             => context.PeopleBooks.Add(value);
 
-        public void Delete([FromBody] Person value) => context.Remove(value);
+        public void Delete([FromBody] Person value) => context.People.Remove(value);
 
-        public void DeletePersonBook([FromBody] PersonBook value) => context.Remove(value);
+        public void DeletePersonBook([FromBody] PersonBook value) => context.PeopleBooks.Remove(value);
 
         public void Save() => context.SaveChanges();
     }

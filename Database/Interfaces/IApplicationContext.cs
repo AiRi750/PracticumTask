@@ -15,5 +15,6 @@ namespace PracticumTask.Database.Interfaces
         public DbSet<Genre> Genres { get; set; }
         public DbSet<Person> People { get; set; }
         public DbSet<PersonBook> PeopleBooks { get; set; }
+        public void SaveChanges();
     }
 }

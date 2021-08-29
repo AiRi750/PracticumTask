@@ -121,5 +121,7 @@ namespace PracticumTask.Database
 
             builder.Entity<PersonBook>().HasData(peopleBooks);
         }
+
+        void IApplicationContext.SaveChanges() => SaveChanges();
     }
 }

@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using PracticumTask.BusinessLogic.Services.Interfaces;
 using PracticumTask.Database;
 using PracticumTask.Database.Entities;
+using PracticumTask.Database.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,9 +13,9 @@ namespace PracticumTask.BusinessLogic.Services
 {
     public class AuthorService : IAuthorService
     {
-        private readonly ApplicationContext context;
+        private readonly IApplicationContext context;
 
-        public AuthorService(ApplicationContext context) => this.context = context;
+        public AuthorService(IApplicationContext context) => this.context = context;
 
         public IEnumerable<Author> GetAll() => context.Authors;
 
@@ -32,9 +33,9 @@ namespace PracticumTask.BusinessLogic.Services
                 x.MiddleName == middleName
             );
 
-        public void Add([FromBody] Author value) => context.Add(value);
+        public void Add([FromBody] Author value) => context.Authors.Add(value);
 
-        public void Delete([FromBody] Author value) => context.Remove(value);
+        public void Delete([FromBody] Author value) => context.Authors.Remove(value);
 
         public void Save() => context.SaveChanges();
     }

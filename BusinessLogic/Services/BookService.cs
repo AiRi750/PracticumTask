@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using PracticumTask.BusinessLogic.Services.Interfaces;
 using PracticumTask.Database;
 using PracticumTask.Database.Entities;
+using PracticumTask.Database.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,9 +13,9 @@ namespace PracticumTask.BusinessLogic.Services
 {
     public class BookService : IBookService
     {
-        private readonly ApplicationContext context;
+        private readonly IApplicationContext context;
 
-        public BookService(ApplicationContext context) => this.context = context;
+        public BookService(IApplicationContext context) => this.context = context;
 
         public IEnumerable<Book> GetAll() => context.Books;
 
@@ -83,11 +84,11 @@ namespace PracticumTask.BusinessLogic.Services
 
         public IEnumerable<Genre> GetAllGenres() => context.Genres;
 
-        public void Add([FromBody] Book value) => context.Add(value);
+        public void Add([FromBody] Book value) => context.Books.Add(value);
 
-        public void AddAuthor([FromBody] Author value) => context.Add(value);
+        public void AddAuthor([FromBody] Author value) => context.Authors.Add(value);
 
-        public void AddGenre(string genreName) => context.Add(new Genre() { Name = genreName });
+        public void AddGenre(string genreName) => context.Genres.Add(new Genre() { Name = genreName });
 
         public void AddGenreToBook([FromBody] Book value, string genre)
             => value.Genres.Add(GetGenre(genre));
@@ -96,7 +97,7 @@ namespace PracticumTask.BusinessLogic.Services
             => value.Genres.Remove(GetGenre(genreName));
 
         public void Delete([FromBody] Book value)
-            => context.Remove(value);
+            => context.Books.Remove(value);
 
         public void Save() => context.SaveChanges();
     }
