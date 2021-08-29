@@ -3,9 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using PracticumTask.Models;
-using PracticumTask.Services;
-using PracticumTask.Extensions;
+using PracticumTask.Database.Entities;
+using PracticumTask.BusinessLogic.Services.Interfaces;
+using PracticumTask.BusinessLogic.Dto;
+using PracticumTask.BusinessLogic.Services.Extensions;
 
 namespace PracticumTask.Controllers
 {
@@ -42,9 +43,9 @@ namespace PracticumTask.Controllers
         {
             var book = bookService.GetByAuthorAndTitle
                 (
-                    value.Author.FirstName, 
-                    value.Author.LastName, 
-                    value.Author.MiddleName, 
+                    value.Author.FirstName,
+                    value.Author.LastName,
+                    value.Author.MiddleName,
                     value.Title
                 );
             if (book == null)
