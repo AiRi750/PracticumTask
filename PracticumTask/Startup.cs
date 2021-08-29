@@ -8,7 +8,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using PracticumTask.Services;
+using PracticumTask.BusinessLogic.Services;
+using PracticumTask.BusinessLogic.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,7 +29,7 @@ namespace PracticumTask
         public void ConfigureServices(IServiceCollection services)
         {
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
-            services.AddDbContext<Models.ApplicationContext>(options => options.UseNpgsql(connectionString));
+            services.AddDbContext<Database.ApplicationContext>(options => options.UseNpgsql(connectionString));
 
             services.AddScoped<IAuthorService, AuthorService>();
             services.AddScoped<IPersonService, PersonService>();

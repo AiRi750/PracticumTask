@@ -1,11 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using PracticumTask.Models;
-using PracticumTask.Services;
-using PracticumTask.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using PracticumTask.Database.Entities;
+using PracticumTask.BusinessLogic.Services.Interfaces;
+using PracticumTask.BusinessLogic.Dto;
+using PracticumTask.BusinessLogic.Services.Extensions;
 
 namespace PracticumTask.Controllers
 {
@@ -20,8 +21,6 @@ namespace PracticumTask.Controllers
         [HttpGet]
         public IEnumerable<PersonDto> GetAll() => personService.GetAll().ToDto();
 
-        //Получить список всех взятых пользователем книг (GET) в качестве параметра поиска - ID пользователя. Полное дерево: Книги - автор - жанр
-        //todo make detailedDto
         [HttpGet("personBooks")]
         public IEnumerable<BookDto> GetAllBooks(int personId) => personService.GetAllBooks(personId).ToDto();
 
@@ -70,10 +69,10 @@ namespace PracticumTask.Controllers
         [Route("UpdatePerson")]
         public async Task<IActionResult> Post
             (
-                [FromBody] Person oldValue, 
-                string firstName, 
-                string lastName, 
-                string middleName, 
+                [FromBody] Person oldValue,
+                string firstName,
+                string lastName,
+                string middleName,
                 DateTime? birthdate
             )
         {
