@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace PracticumTask.Models
+namespace PracticumTask.Database.Entities
 {
     public class Book
     {

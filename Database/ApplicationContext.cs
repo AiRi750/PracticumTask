@@ -1,10 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using PracticumTask.Database.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace PracticumTask.Models
+namespace PracticumTask.Database
 {
     public class ApplicationContext : DbContext
     {
