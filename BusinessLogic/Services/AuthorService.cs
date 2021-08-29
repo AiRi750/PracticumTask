@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PracticumTask.BusinessLogic.Services.Interfaces;
+using PracticumTask.Database;
 using PracticumTask.Database.Entities;
 using System;
 using System.Collections.Generic;
