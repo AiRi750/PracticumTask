@@ -1,11 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using PracticumTask.Models;
+using PracticumTask.BusinessLogic.Services.Interfaces;
+using PracticumTask.Database.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace PracticumTask.Services
+namespace PracticumTask.BusinessLogic.Services
 {
     public class GenreService : IGenreService
     {

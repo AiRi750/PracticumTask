@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using PracticumTask.Models;
+using PracticumTask.Database.Entities;
 
-namespace PracticumTask.Services
+namespace PracticumTask.BusinessLogic.Services.Interfaces
 {
     public interface IAuthorService
     {

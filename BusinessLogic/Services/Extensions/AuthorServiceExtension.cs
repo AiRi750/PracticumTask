@@ -1,10 +1,11 @@
-﻿using PracticumTask.Models;
+﻿using PracticumTask.BusinessLogic.Dto;
+using PracticumTask.Database.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace PracticumTask.Extensions
+namespace PracticumTask.BusinessLogic.Services.Extensions
 {
     public static class AuthorServiceExtension
     {
@@ -12,8 +13,8 @@ namespace PracticumTask.Extensions
             => authors.Select(x => x.ToDto());
 
         public static AuthorDto ToDto(this Author author)
-            => new AuthorDto 
-            { 
+            => new AuthorDto
+            {
                 FirstName = author.FirstName,
                 LastName = author.LastName,
                 MiddleName = author.MiddleName

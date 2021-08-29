@@ -1,12 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using PracticumTask.Models;
+using PracticumTask.BusinessLogic.Services.Interfaces;
+using PracticumTask.Database.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace PracticumTask.Services
+namespace PracticumTask.BusinessLogic.Services
 {
     public class AuthorService : IAuthorService
     {
@@ -21,12 +22,12 @@ namespace PracticumTask.Services
 
         public Author Get(int id) => context.Authors.Find(id);
 
-        public Author Get(string firstName, string lastName, string middleName) 
+        public Author Get(string firstName, string lastName, string middleName)
             => context.Authors.FirstOrDefault
             (
-                x => 
-                x.FirstName == firstName && 
-                x.LastName == lastName && 
+                x =>
+                x.FirstName == firstName &&
+                x.LastName == lastName &&
                 x.MiddleName == middleName
             );
 

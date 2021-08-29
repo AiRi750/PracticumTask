@@ -1,12 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using PracticumTask.Models;
+using PracticumTask.BusinessLogic.Services.Interfaces;
+using PracticumTask.Database.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace PracticumTask.Services
+namespace PracticumTask.BusinessLogic.Services
 {
     public class PersonService : IPersonService
     {
@@ -48,7 +49,7 @@ namespace PracticumTask.Services
 
         public void Add([FromBody] Person value) => context.Add(value);
 
-        public void AddBook([FromBody] PersonBook value) 
+        public void AddBook([FromBody] PersonBook value)
             => context.PeopleBooks.Add(value);
 
         public void Delete([FromBody] Person value) => context.Remove(value);

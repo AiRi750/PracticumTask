@@ -1,11 +1,11 @@
-﻿using PracticumTask.Models;
-using PracticumTask.Services;
+﻿using PracticumTask.BusinessLogic.Dto;
+using PracticumTask.Database.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace PracticumTask.Extensions
+namespace PracticumTask.BusinessLogic.Services.Extensions
 {
     public static class GenreServiceExtension
     {

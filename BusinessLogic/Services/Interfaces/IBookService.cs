@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using PracticumTask.Models;
+using PracticumTask.Database.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace PracticumTask.Services
+namespace PracticumTask.BusinessLogic.Services.Interfaces
 {
     public interface IBookService
     {
@@ -15,9 +15,9 @@ namespace PracticumTask.Services
         public Book Get(int id);
         public Book GetByAuthorAndTitle
             (
-                string firstName, 
-                string lastName, 
-                string middleName, 
+                string firstName,
+                string lastName,
+                string middleName,
                 string title
             );
         public Book GetByAuthorIdAndTitle(int authorId, string title);

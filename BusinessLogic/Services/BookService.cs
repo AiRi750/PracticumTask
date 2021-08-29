@@ -1,12 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using PracticumTask.Models;
+using PracticumTask.BusinessLogic.Services.Interfaces;
+using PracticumTask.Database.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace PracticumTask.Services
+namespace PracticumTask.BusinessLogic.Services
 {
     public class BookService : IBookService
     {
@@ -24,7 +25,7 @@ namespace PracticumTask.Services
 
         public Book Get(int id) => context.Books.Find(id);
 
-        public IEnumerable<Book> GetAllByAuthor(string firstName, string lastName, string middleName) 
+        public IEnumerable<Book> GetAllByAuthor(string firstName, string lastName, string middleName)
             => context.Books.Where
             (
                 x =>
@@ -35,9 +36,9 @@ namespace PracticumTask.Services
 
         public Book GetByAuthorAndTitle
             (
-                string firstName, 
-                string lastName, 
-                string middleName, 
+                string firstName,
+                string lastName,
+                string middleName,
                 string title
             )
             => context.Books.FirstOrDefault
@@ -49,10 +50,10 @@ namespace PracticumTask.Services
                 x.Author.MiddleName == middleName
             );
 
-        public Book GetByAuthorIdAndTitle(int authorId, string title) 
+        public Book GetByAuthorIdAndTitle(int authorId, string title)
             => context.Books.FirstOrDefault
             (
-                x => 
+                x =>
                 x.AuthorId == authorId &&
                 x.Title == title
             );
@@ -93,7 +94,7 @@ namespace PracticumTask.Services
         public void DeleteGenreFromBook([FromBody] Book value, string genreName)
             => value.Genres.Remove(GetGenre(genreName));
 
-        public void Delete([FromBody] Book value) 
+        public void Delete([FromBody] Book value)
             => context.Remove(value);
 
         public void Save() => context.SaveChanges();

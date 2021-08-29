@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace PracticumTask.Models
+namespace PracticumTask.BusinessLogic.Dto
 {
-    public class BookDto
+    public class GenreDto
     {
-        public string Title { get; set; }
+        public string Name { get; set; }
     }
 }
