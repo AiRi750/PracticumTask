@@ -49,15 +49,44 @@ namespace PracticumTask.BusinessLogic.Services
                 x.MiddleName == middleName
             );
 
-        public void Add([FromBody] Person value) => context.People.Add(value);
+        public void Add([FromBody] Person value)
+        { 
+            context.People.Add(value);
+            context.SaveChanges();
+        }
 
         public void AddBook([FromBody] PersonBook value)
-            => context.PeopleBooks.Add(value);
+        { 
+            context.PeopleBooks.Add(value);
+            context.SaveChanges();
+        }
 
-        public void Delete([FromBody] Person value) => context.People.Remove(value);
+        public void UpdatePerson
+            (
+                [FromBody] Person oldPerson,
+                string firstName,
+                string lastName,
+                string middleName,
+                DateTime? birthdate
+            )
+        {
+            oldPerson.FirstName = firstName;
+            oldPerson.LastName = lastName;
+            oldPerson.MiddleName = middleName;
+            oldPerson.Birthdate = birthdate;
+            context.SaveChanges();
+        }
 
-        public void DeletePersonBook([FromBody] PersonBook value) => context.PeopleBooks.Remove(value);
+        public void Delete([FromBody] Person value)
+        { 
+            context.People.Remove(value);
+            context.SaveChanges();
+        }
 
-        public void Save() => context.SaveChanges();
+        public void DeletePersonBook([FromBody] PersonBook value)
+        { 
+            context.PeopleBooks.Remove(value);
+            context.SaveChanges();
+        }
     }
 }
