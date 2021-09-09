@@ -32,6 +32,5 @@ namespace PracticumTask.BusinessLogic.Services.Interfaces
         public void AddGenreToBook([FromBody] Book value, string genreName);
         public void DeleteGenreFromBook([FromBody] Book value, string genreName);
         public void Delete([FromBody] Book value);
-        public void Save();
     }
 }

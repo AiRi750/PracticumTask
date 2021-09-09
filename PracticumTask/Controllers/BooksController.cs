@@ -56,7 +56,6 @@ namespace PracticumTask.Controllers
                 return Conflict();
 
             bookService.AddGenreToBook(book, genreName);
-            bookService.Save();
             return Ok();
         }
 
@@ -74,7 +73,6 @@ namespace PracticumTask.Controllers
                 return NotFound();
 
             bookService.DeleteGenreFromBook(book, genreName);
-            bookService.Save();
             return Ok();
         }
 
@@ -88,7 +86,6 @@ namespace PracticumTask.Controllers
                 return BadRequest("Ошибка - книга у пользователя");
 
             bookService.Delete(book);
-            bookService.Save();
             return Ok();
         }
     }
