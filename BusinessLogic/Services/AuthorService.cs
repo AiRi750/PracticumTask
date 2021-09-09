@@ -33,10 +33,16 @@ namespace PracticumTask.BusinessLogic.Services
                 x.MiddleName == middleName
             );
 
-        public void Add([FromBody] Author value) => context.Authors.Add(value);
+        public void Add([FromBody] Author value)
+        {
+            context.Authors.Add(value);
+            context.SaveChanges();
+        }
 
-        public void Delete([FromBody] Author value) => context.Authors.Remove(value);
-
-        public void Save() => context.SaveChanges();
+        public void Delete([FromBody] Author value)
+        {
+            context.Authors.Remove(value);
+            context.SaveChanges();
+        }
     }
 }
