@@ -36,11 +36,11 @@ namespace BusinessLogic.Tests
                 .Returns(GetTestAuthors().Where(x => x.FirstName == firstName));
             var controller = new AuthorsController(mock.Object);
 
-            var authors = controller.Get(firstName);
+            var result = controller.Get(firstName);
 
             mock.Verify(service => service.Get(firstName));
-            Assert.IsInstanceOf<Task<IActionResult>>(authors);
-            Assert.IsInstanceOf<OkObjectResult>(authors.Result);
+            Assert.IsInstanceOf<Task<IActionResult>>(result);
+            Assert.IsInstanceOf<OkObjectResult>(result.Result);
         }
 
         [Test]
@@ -52,11 +52,11 @@ namespace BusinessLogic.Tests
                 .Returns(GetTestAuthors().Where(x => x.FirstName == firstName));
             var controller = new AuthorsController(mock.Object);
 
-            var authors = controller.Get(firstName);
+            var result = controller.Get(firstName);
 
             mock.Verify(service => service.Get(firstName));
-            Assert.IsInstanceOf<Task<IActionResult>>(authors);
-            Assert.IsInstanceOf<NotFoundResult>(authors.Result);
+            Assert.IsInstanceOf<Task<IActionResult>>(result);
+            Assert.IsInstanceOf<NotFoundResult>(result.Result);
         }
 
         [Test]
