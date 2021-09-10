@@ -248,20 +248,14 @@ namespace BusinessLogic.Tests
                 new Author(){ Id = 2, FirstName = "second", LastName = "second" },
             };
 
-            var people = new List<Person>()
-            {
-                new Person() { Id = 1, FirstName = "person1", LastName = "person1" },
-                new Person() { Id = 2, FirstName = "person2", LastName = "person2" },
-            };
-
             var books = new List<Book>()
             {
-                new Book() 
-                { 
-                    Id = 1, 
-                    Title = "book1", 
-                    Author = authors[0], 
-                    AuthorId = authors[0].Id, 
+                new Book()
+                {
+                    Id = 1,
+                    Title = "book1",
+                    Author = authors[0],
+                    AuthorId = authors[0].Id,
                     Genres = new List<Genre>() { genres[0], genres[1] },
                 },
                 new Book()
@@ -282,12 +276,44 @@ namespace BusinessLogic.Tests
                 }
             };
 
-            var peopleBooks = new List<PersonBook>()
+            var people = new List<Person>()
             {
-                new PersonBook() { Book = books[0], BookId = books[0].Id, Person = people[1], PersonId = people[1].Id },
+                new Person() { Id = 1, FirstName = "person1", LastName = "person1" },
+                new Person() { Id = 2, FirstName = "person2", LastName = "person2" },
+            };
+
+            var person1Books = new List<PersonBook>()
+            {
                 new PersonBook() { Book = books[1], BookId = books[1].Id, Person = people[0], PersonId = people[0].Id },
                 new PersonBook() { Book = books[2], BookId = books[2].Id, Person = people[0], PersonId = people[0].Id },
             };
+
+            var person2Books = new List<PersonBook>()
+            {
+                new PersonBook() { Book = books[0], BookId = books[0].Id, Person = people[1], PersonId = people[1].Id },
+            };
+
+            var book1People = new List<PersonBook>()
+            {
+                new PersonBook() { Book = books[0], BookId = books[0].Id, Person = people[1], PersonId = people[1].Id },
+            };
+
+            var book2People = new List<PersonBook>()
+            {
+                new PersonBook() { Book = books[1], BookId = books[1].Id, Person = people[0], PersonId = people[0].Id },
+            };
+
+            var book3People = new List<PersonBook>()
+            {
+                new PersonBook() { Book = books[2], BookId = books[2].Id, Person = people[0], PersonId = people[0].Id },
+            };
+
+            people[0].PeopleBooks = person1Books;
+            people[1].PeopleBooks = person2Books;
+
+            books[0].PeopleBooks = book1People;
+            books[1].PeopleBooks = book2People;
+            books[2].PeopleBooks = book3People;
 
             return books;
         }
