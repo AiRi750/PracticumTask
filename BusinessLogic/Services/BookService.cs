@@ -84,21 +84,39 @@ namespace PracticumTask.BusinessLogic.Services
 
         public IEnumerable<Genre> GetAllGenres() => context.Genres;
 
-        public void Add([FromBody] Book value) => context.Books.Add(value);
+        public void Add([FromBody] Book value)
+        {
+            context.Books.Add(value);
+            context.SaveChanges();
+        }
 
-        public void AddAuthor([FromBody] Author value) => context.Authors.Add(value);
+        public void AddAuthor([FromBody] Author value)
+        {
+            context.Authors.Add(value);
+            context.SaveChanges();
+        }
+        public void AddGenre(string genreName)
+        {
+            context.Genres.Add(new Genre() { Name = genreName });
+            context.SaveChanges();
+        }
 
-        public void AddGenre(string genreName) => context.Genres.Add(new Genre() { Name = genreName });
+        public void AddGenreToBook([FromBody] Book book, string genre)
+        { 
+            book.Genres.Add(GetGenre(genre));
+            context.SaveChanges();
+        }
 
-        public void AddGenreToBook([FromBody] Book value, string genre)
-            => value.Genres.Add(GetGenre(genre));
-
-        public void DeleteGenreFromBook([FromBody] Book value, string genreName)
-            => value.Genres.Remove(GetGenre(genreName));
+        public void DeleteGenreFromBook([FromBody] Book book, string genreName)
+        { 
+            book.Genres.Remove(GetGenre(genreName));
+            context.SaveChanges();
+        }
 
         public void Delete([FromBody] Book value)
-            => context.Books.Remove(value);
-
-        public void Save() => context.SaveChanges();
+        { 
+            context.Books.Remove(value);
+            context.SaveChanges();
+        }
     }
 }

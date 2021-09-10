@@ -38,7 +38,6 @@ namespace PracticumTask.Controllers
                 return Conflict();
 
             authorService.Add(value);
-            authorService.Save();
             return Ok(authorService.GetAll().ToDto());
         }
 
@@ -50,7 +49,6 @@ namespace PracticumTask.Controllers
                 return NotFound();
 
             authorService.Delete(author);
-            authorService.Save();
             return Ok();
         }
     }

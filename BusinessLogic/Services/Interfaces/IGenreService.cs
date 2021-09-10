@@ -13,6 +13,5 @@ namespace PracticumTask.BusinessLogic.Services.Interfaces
         public Genre Get(string name);
         public void Add([FromBody] Genre value);
         public void Delete([FromBody] Genre value);
-        public void Save();
     }
 }

@@ -38,7 +38,6 @@ namespace PracticumTask.Controllers
                 return Conflict();
 
             genreService.Add(value);
-            genreService.Save();
             return Ok(genreService.GetAll().ToDto());
         }
 
@@ -50,7 +49,6 @@ namespace PracticumTask.Controllers
                 return NotFound();
 
             genreService.Delete(genre);
-            genreService.Save();
             return Ok();
         }
     }

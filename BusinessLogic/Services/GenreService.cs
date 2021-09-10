@@ -20,10 +20,16 @@ namespace PracticumTask.BusinessLogic.Services
 
         public Genre Get(string name) => context.Genres.FirstOrDefault(x => x.Name == name);
 
-        public void Add([FromBody] Genre value) => context.Genres.Add(value);
+        public void Add([FromBody] Genre value)
+        {
+            context.Genres.Add(value);
+            context.SaveChanges();
+        }
 
-        public void Delete([FromBody] Genre value) => context.Genres.Remove(value);
-
-        public void Save() => context.SaveChanges();
+        public void Delete([FromBody] Genre value)
+        {
+            context.Genres.Remove(value);
+            context.SaveChanges();
+        }
     }
 }

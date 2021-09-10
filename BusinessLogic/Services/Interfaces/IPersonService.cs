@@ -18,8 +18,15 @@ namespace PracticumTask.BusinessLogic.Services.Interfaces
         public PersonBook GetPersonBook(int personId, int bookId);
         public void Add([FromBody] Person value);
         public void AddBook([FromBody] PersonBook value);
+        public void UpdatePerson
+            (
+                [FromBody] Person oldValue,
+                string firstName,
+                string lastName,
+                string middleName,
+                DateTime? birthdate
+            );
         public void Delete([FromBody] Person value);
         public void DeletePersonBook([FromBody] PersonBook value);
-        public void Save();
     }
 }

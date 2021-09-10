@@ -46,7 +46,6 @@ namespace PracticumTask.Controllers
                 return Conflict();
 
             personService.Add(value);
-            personService.Save();
             return Ok(value.ToDto());
         }
 
@@ -61,7 +60,6 @@ namespace PracticumTask.Controllers
                 return Conflict();
 
             personService.AddBook(value);
-            personService.Save();
             return Ok();
         }
 
@@ -85,21 +83,7 @@ namespace PracticumTask.Controllers
             if (oldPerson == null)
                 return NotFound();
 
-            var newPerson = personService.Get
-            (
-                firstName,
-                lastName,
-                middleName == null ? oldValue.MiddleName : middleName
-            );
-            if (newPerson != null)
-                return Conflict();
-
-            oldPerson.FirstName = firstName;
-            oldPerson.LastName = lastName;
-            oldPerson.MiddleName = middleName == null ? oldValue.MiddleName : middleName;
-            oldPerson.Birthdate = birthdate == null ? oldValue.Birthdate : birthdate;
-
-            personService.Save();
+            personService.UpdatePerson(oldPerson, firstName, lastName, middleName, birthdate);
             return Ok(oldPerson.ToDto());
         }
 
@@ -112,7 +96,6 @@ namespace PracticumTask.Controllers
 
             foreach (var person in people)
                 personService.Delete(person);
-            personService.Save();
             return Ok();
         }
 
@@ -124,7 +107,6 @@ namespace PracticumTask.Controllers
                 return NotFound();
 
             personService.Delete(person);
-            personService.Save();
             return Ok();
         }
 
@@ -136,7 +118,6 @@ namespace PracticumTask.Controllers
                 return NotFound();
 
             personService.DeletePersonBook(personBook);
-            personService.Save();
             return Ok();
         }
     }

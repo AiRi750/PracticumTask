@@ -15,6 +15,5 @@ namespace PracticumTask.BusinessLogic.Services.Interfaces
         public Author Get(string firstName, string lastName, string middleName);
         public void Add([FromBody] Author value);
         public void Delete([FromBody] Author value);
-        public void Save();
     }
 }
