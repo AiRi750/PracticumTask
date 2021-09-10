@@ -29,17 +29,8 @@ namespace PracticumTask.Controllers
         public IEnumerable<BookDto> GetAllByAuthor(string firstName, string lastName, string middleName)
             => bookService.GetAllByAuthor(firstName, lastName, middleName).ToDto();
 
-        [HttpGet("authorFullName")]
-        public async Task<IActionResult> Get(string firstName, string lastName, string middleName)
-        {
-            var books = bookService.GetAllByAuthor(firstName, lastName, middleName);
-            if (books.FirstOrDefault() == null)
-                return NotFound();
-            return Ok(books.ToDto());
-        }
-
         [HttpPut("addGenre")]
-        public async Task<IActionResult> PutAdd([FromBody] Book value, string genreName)
+        public async Task<IActionResult> AddGenre([FromBody] Book value, string genreName)
         {
             var book = bookService.GetByAuthorAndTitle
                 (
@@ -60,7 +51,7 @@ namespace PracticumTask.Controllers
         }
 
         [HttpPut("deleteGenre")]
-        public async Task<IActionResult> PutDelete([FromBody] Book value, string genreName)
+        public async Task<IActionResult> DeleteGenre([FromBody] Book value, string genreName)
         {
             var book = bookService.GetByAuthorAndTitle
                 (
